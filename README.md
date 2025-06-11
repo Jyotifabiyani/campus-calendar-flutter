@@ -1,16 +1,61 @@
-# campus_calendar
+A Flutter-based web-application that helps students stay updated with college events. Admins can create events while students can view them through a sleek and intuitive calendar interface.
 
-A new Flutter project.
+🚀 Features:-
 
-## Getting Started
+ 🔐 Firebase Email Authentication
+ 👤 Role Selection: Admin or Student
+ 🧾 Registration Form with Role-Based Fields
+ 🗓️ Event Calendar for Students (View-Only)
+ 🛠️ Admin Panel to Add Events with:
+    - Event Name
+    - Description
+    - Venue
+    - Date & Time (using calendar picker)
+- 📱 Responsive UI for Web-App
+ 
+🧪 Tech Stack:-
 
-This project is a starting point for a Flutter application.
+- Flutter (Frontend)
+- Firebase Authentication(Login/Register)
+- Firebase Firestore(Event Storage)
+ 
+-Install Dependencies:-
+   flutter pub get
 
-A few resources to get you started if this is your first Flutter project:
+📦 How to Run
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+ 1. Clone the repo  
+ 2. Run 'flutter pub get' 
+ 3. Setup Firebase  
+ 4. Run 'flutter run'
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ 📸 Screenshots
+
+   🖼️ Welcome Page
+![Welcome](screenshots/WelcomePage.png)
+
+   🔐 Login Page
+![Login](screenshots/LoginPage.png)
+
+   🧭 Role Selection Page
+![Role Selection](screenshots/RoleSelectionPage.png)
+
+   📝 Student Registration
+![Student Register](screenshots/StudentRegister.png)
+
+   🏛️ Admin Registration
+![Admin Register](screenshots/AdminRegister.png)
+
+   🛠️ Admin Dashboard
+![Admin Screen](screenshots/AdminScreen.png)
+
+   ➕ Create Event
+![Create Event](screenshots/CreateEvent.png)
+
+   📅 Student Event Viewer
+![View Event](screenshots/ViewEvent.png)
+
+👩‍💻 Developed By
+   -Jyoti Fabiyani 
+ 📧[Email] 2022.jyoti.fabiyani@ves.ac.in
+ 🔗[LinkedIn] https://www.linkedin.com/in/jyoti-fabiyani-355b972b2/

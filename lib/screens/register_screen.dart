@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'otp_verification.dart'; // Import the OTP verification screen
 import '../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final String role; // ✅ Role passed from RoleSelectionScreen
-
+  final String role;
   const RegisterScreen({Key? key, required this.role}) : super(key: key);
 
   @override
@@ -16,116 +14,85 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _councilOrBranchController = TextEditingController();
+  final TextEditingController _extraFieldController = TextEditingController();
   final AuthService _authService = AuthService();
 
   void _registerUser() async {
     if (_formKey.currentState!.validate()) {
-      // Navigate to OTP verification screen
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => OTPVerificationScreen(
-            email: _emailController.text,
-            password: _passwordController.text,
-            name: _nameController.text,
-            extraField: _councilOrBranchController.text,
-            role: widget.role,
-          ),
-        ),
-      );
-    }
-  }
+      String email = _emailController.text.trim();
+      String password = _passwordController.text.trim();
+      String extraField = _extraFieldController.text.trim();
 
-  // Validate email domain
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Please enter your email";
+      try {
+        await _authService.registerWithEmailAndPassword(
+            email, password, widget.role, extraField);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Verification email sent! Please check your inbox.")),
+        );
+
+        Navigator.pushReplacementNamed(context, '/login');
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e")),
+        );
+      }
     }
-    if (!value.endsWith("@ves.ac.in")) {
-      return "Please enter VES-ID only";
-    }
-    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.role == "Admin" ? "Register as Admin" : "Register as Student"), // ✅ Dynamic title
+        title: Text("Register as ${widget.role}"),
         backgroundColor: Colors.green,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Name Field
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: "Name"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your name";
-                  }
-                  return null;
-                },
+                decoration: const InputDecoration(labelText: "Full Name"),
+                validator: (value) =>
+                    value == null || value.isEmpty ? "Name is required" : null,
               ),
-              
-              // Email Field
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: "Email"),
-                validator: _validateEmail, // ✅ Validate email domain
-              ),
-
-              // Council Name for Admin / Branch Name for Student
-              if (widget.role == "Admin") 
-                TextFormField(
-                  controller: _councilOrBranchController,
-                  decoration: InputDecoration(labelText: "Council Name"),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter council name";
-                    }
-                    return null;
-                  },
-                ),
-              if (widget.role == "Student") 
-                TextFormField(
-                  controller: _councilOrBranchController,
-                  decoration: InputDecoration(labelText: "Branch Name"),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter branch name";
-                    }
-                    return null;
-                  },
-                ),
-
-              // Password Field
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: "Password"),
-                obscureText: true,
+                decoration: const InputDecoration(labelText: "Email"),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter your password";
+                    return "Email is required";
+                  } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    return "Enter a valid email address";
                   }
                   return null;
                 },
               ),
-
-              SizedBox(height: 20),
-
-              // Register Button
-              Center(
-                child: ElevatedButton(
-                  onPressed: _registerUser,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                  child: Text("Register", style: TextStyle(color: Colors.white)),
+              TextFormField(
+                controller: _passwordController,
+                decoration: const InputDecoration(labelText: "Password"),
+                obscureText: true,
+                validator: (value) =>
+                    value == null || value.isEmpty ? "Password required" : null,
+              ),
+              TextFormField(
+                controller: _extraFieldController,
+                decoration: InputDecoration(
+                  labelText: widget.role == "Admin"
+                      ? "Council Name"
+                      : "Branch Name"
                 ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? "This field is required" : null,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _registerUser,
+                child: const Text("Register"),
               ),
             ],
           ),
