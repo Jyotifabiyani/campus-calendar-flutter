@@ -29,31 +29,39 @@ A Flutter-based web-application that helps students stay updated with college ev
  3. Setup Firebase  
  4. Run 'flutter run'
 
-📸 Screenshots
+ 📸 Screenshots
 
-🖼️ Welcome Page
+   🖼️ Welcome Page
 
+![Welcome](screenshots/WelcomePage.png)
 
-🔐 Login Page
+   🔐 Login Page
 
+![Login](screenshots/LoginPage.png)
 
-🧭 Role Selection Page
+   🧭 Role Selection Page
 
+![Role Selection](screenshots/RoleSelectionPage.png)
 
-📝 Student Registration
+   📝 Student Registration
 
+![Student Register](screenshots/StudentRegister.png)
 
-🏛️ Admin Registration
+   🏛️ Admin Registration
 
+![Admin Register](screenshots/AdminRegister.png)
 
-🛠️ Admin Dashboard
+   🛠️ Admin Dashboard
 
+![Admin Screen](screenshots/AdminScreen.png)
 
-➕ Create Event
+   ➕ Create Event
 
+![Create Event](screenshots/CreateEvent.png)
 
-📅 Student Event Viewer
-
+   📅 Student Event Viewer
+   
+![View Event](screenshots/ViewEvent.png)
 
 👩‍💻 Developed By
    -Jyoti Fabiyani 
